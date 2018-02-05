@@ -1,0 +1,35 @@
+
+/*
+	compile('org.springframework.boot:spring-boot-starter')
+	compile project(':project-submodule')
+	compile files('../libs/javax.jms.jar')
+*/
+
+dependencies {
+
+	/*
+    ------------------------------
+        compile
+    ------------------------------
+    */
+
+	// spring-boot
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	/*
+    ------------------------------
+        testCompile
+    ------------------------------
+    */
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+	/*
+    ------------------------------
+        runtime
+    ------------------------------
+    */
+	runtime 'org.springframework.boot:spring-boot-devtools'
+	runtime  'com.h2database:h2:1.4.196'
+
+}
