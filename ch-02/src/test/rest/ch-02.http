@@ -6,3 +6,5 @@ GET http://localhost:8080/currency/latest
 GET http://localhost:8080/currency/new
 
 
+### 예제 블로그
+# http://jojoldu.tistory.com/266
