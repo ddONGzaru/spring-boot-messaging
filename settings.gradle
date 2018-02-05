@@ -1,0 +1,3 @@
+rootProject.name = 'spring-boot-messaging'
+include 'ch-01',
+        'ch-02'
