@@ -1,4 +1,4 @@
-package io.manasobi.domain;
+package io.manasobi.messaging.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

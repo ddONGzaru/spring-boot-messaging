@@ -1,15 +1,15 @@
-package io.manasobi.service;
+package io.manasobi.messaging.service;
 
-import io.manasobi.annotation.ToUpper;
-import io.manasobi.domain.CurrencyConversion;
-import io.manasobi.domain.CurrencyExchange;
-import io.manasobi.domain.Rate;
-import io.manasobi.repo.RateRepo;
+import io.manasobi.messaging.annotation.ToUpper;
+import io.manasobi.messaging.domain.CurrencyConversion;
+import io.manasobi.messaging.domain.CurrencyExchange;
+import io.manasobi.messaging.domain.Rate;
+import io.manasobi.messaging.repo.RateRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -21,15 +21,17 @@ public class CurrencyConversionService {
 	
 	public CurrencyConversion convertFromTo(@ToUpper String base, @ToUpper String code, Float amount) throws Exception {
 
-		Rate baseRate = new Rate(CurrencyExchange.BASE_CODE, 1.0F, new Date());
-		Rate codeRate = new Rate(CurrencyExchange.BASE_CODE, 1.0F, new Date());
-		
+	    LocalDate now = LocalDate.now();
+
+        Rate baseRate = Rate.of(CurrencyExchange.BASE_CODE, 1.0F, now);
+        Rate codeRate = Rate.of(CurrencyExchange.BASE_CODE, 1.0F, now);
+
 		if (!CurrencyExchange.BASE_CODE.equals(base)) {
-            baseRate = rateRepo.findByDateAndCode(new Date(), base);
+            baseRate = rateRepo.findByDateAndCode(now, base);
         }
 
 		if (!CurrencyExchange.BASE_CODE.equals(code)) {
-            codeRate = rateRepo.findByDateAndCode(new Date(), code);
+            codeRate = rateRepo.findByDateAndCode(now, code);
         }
 
 		if(null == codeRate || null == baseRate)
@@ -38,7 +40,7 @@ public class CurrencyConversionService {
 		return new CurrencyConversion(base, code, amount, (codeRate.getRate()/baseRate.getRate()) * amount);
 	}
 	
-	public Rate[] calculateByCode(@ToUpper String code, Date date) throws Exception {
+	public Rate[] calculateByCode(@ToUpper String code, LocalDate date) throws Exception {
 
 		List<Rate> rates = rateRepo.findByDate(date);
 
@@ -57,14 +59,16 @@ public class CurrencyConversionService {
 		return Stream.concat(
                     rates.stream()
 			             .filter(n -> !n.getCode().equals(code))
-			             .map(n -> new Rate(n.getCode(), n.getRate() / baseRate.getRate(), date)),
-                    Stream.of(new Rate(CurrencyExchange.BASE_CODE, 1 / baseRate.getRate(), date))
+			             .map(n -> Rate.of(n.getCode(), n.getRate() / baseRate.getRate(), date)),
+                    Stream.of(Rate.of(CurrencyExchange.BASE_CODE, 1 / baseRate.getRate(), date))
                 ).toArray(size -> new Rate[size]);
 	}
 	
-	public void saveRates(Rate[] rates, Date date) {
-		Arrays.stream(rates)
-              .forEach(rate -> rateRepo.save(new Rate(rate.getCode(), rate.getRate(), date)));
+	public void saveRates(Rate[] rates, LocalDate date) {
+
+        List<Rate> rateList = CollectionUtils.arrayToList(rates);
+
+        rateList.forEach(rate -> rateRepo.save(Rate.of(rate.getCode(), rate.getRate(), date)));
 	}
 	
 }

@@ -5,6 +5,7 @@
 	compile files('../libs/javax.jms.jar')
 */
 
+
 dependencies {
 
 	/*
@@ -16,6 +17,9 @@ dependencies {
 	// spring-boot
 	compile 'org.springframework.boot:spring-boot-starter-web'
 	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// geronimo-utils
+	compile 'io.geronimo:geronimo-utils:1.10.0.RELEASE'
 
 	/*
     ------------------------------

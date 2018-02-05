@@ -1,0 +1,8 @@
+
+### [GET] currency/latest
+GET http://localhost:8080/currency/latest
+
+###
+GET http://localhost:8080/currency/new
+
+

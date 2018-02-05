@@ -39,7 +39,7 @@ allprojects {
 	/* _____ repo config _____ */
 	repositories {
 		maven {
-			url "${NEXUS_URL}/content/groups/public/"
+			url "${NEXUS_URL}/repository/maven-public/"
 			credentials {
 				username NEXUS_ID
 				password NEXUS_PASSWORD

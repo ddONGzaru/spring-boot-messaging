@@ -1,9 +1,9 @@
-package io.manasobi.aop;
+package io.manasobi.messaging.aop;
 
 import java.lang.reflect.Parameter;
 import java.util.stream.IntStream;
 
-import io.manasobi.annotation.ToUpper;
+import io.manasobi.messaging.annotation.ToUpper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CurrencyCodeAudit {
 	
-	@Pointcut("execution(* io.manasobi.service.*Service.*(.., @io.manasobi.annotation.ToUpper (*),..))")
+	@Pointcut("execution(* io.manasobi.service.*Service.*(.., @io.manasobi.messaging.annotation.ToUpper (*),..))")
     public void methodPointcut() {}
 	
 	@Around("methodPointcut()")

@@ -1,4 +1,4 @@
-package io.manasobi.annotation;
+package io.manasobi.messaging.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
