@@ -1,0 +1,12 @@
+
+###
+GET http://localhost:8080/metrics
+
+### [GET] currency/latest
+GET http://localhost:8080/currency/latest
+
+
+
+
+### 예제 블로그
+# http://jojoldu.tistory.com/266

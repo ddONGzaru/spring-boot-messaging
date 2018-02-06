@@ -1,0 +1,10 @@
+#spring.h2.console.enabled=true
+#server.error.whitelabel.enabled=false
+
+#spring.aop.auto=true
+#spring.aop.proxy-target-class=true
+
+
+## [ actuator ]
+management:
+  security.enabled: false
